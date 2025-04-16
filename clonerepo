@@ -3,7 +3,7 @@
 # Clone repo helper with additional options
 set -eou pipefail
 
-VERSION="1.0.0"
+VERSION="1.0.1"
 
 cd "$(dirname "$0")/"
 dir_root=$(pwd)
