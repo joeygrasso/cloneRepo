@@ -5,15 +5,10 @@ set -eou pipefail
 
 VERSION="1.0.0"
 
-###
-# TO-DO START: 
-# Figure out path and sourcing helpers file
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/"
 dir_root=$(pwd)
 
-source ${dir_root}/cloneRepo/bash_helpers
-# TO-DO END
-###
+source ${dir_root}/bash_helpers
 
 usage() {
     cat <<EOF
@@ -27,12 +22,13 @@ OPTIONS:
   -k, --key         Clone over SSH using a key. Default is HTTPS.
   -n, --repo-name   Name of repo to be cloned.
   -o, --repo-owner  Repository owner of repo to be cloned.
-  -p, --clone-path  Path to clone the repo to. Default is where this
-                    script lives.
+  -p, --clone-path  Clone destination path. Default is a user's home
+                    directory.
   -r, --remote      Remote repository owner usually a github user or
                     organization.
   -s, --source      Source of repo. Default github.com.
   -v, --version     Show version and exit.
+
 EOF
 }
 
@@ -81,7 +77,7 @@ check_installed git
 
 # Arguments
 ALIAS=
-CLONE_PATH="."
+CLONE_PATH=${HOME}
 REPO_SOURCE="github.com"
 REPO_OWNER=
 REPO_NAME=
