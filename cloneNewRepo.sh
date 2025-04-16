@@ -1,7 +1,9 @@
 #!/bin/bash
 #
 # Clone New Repo with options over SSH
-set -e
+set -eou pipefail
+
+VERSION="1.0.0"
 
 ###
 # TO-DO START: 
@@ -30,6 +32,7 @@ OPTIONS:
   -r, --remote      Remote repository owner usually a github user or
                     organization.
   -s, --source      Source of repo. Default github.com.
+  -v, --version     Show version and exit.
 EOF
 }
 
@@ -106,12 +109,20 @@ while [ $# -gt 0 ]; do
       REPO_REMOTE_OWNER="$2"; shift;;
     -s|--source)
       REPO_SOURCE="$2"; shift;;
+    -v|--version)
+      VERSION_FLAG=true;;
     *)
       fail "Unsupported flag detected."
       exit 1
   esac
   shift;
 done
+
+# Output Version and Exit
+if [[ ${VERSION_FLAG} ]]; then
+  echo "v${VERSION}"
+  exit 0
+fi
 
 # Get Protocol and Separator
 if [[ ${SSH} ]]; then
