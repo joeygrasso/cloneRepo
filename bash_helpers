@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# Collection of helper functions for bash scripts
+
+
+log() {
+    echo "==> $@"
+}
+
+success() {
+    echo -e "\033[1;32mSUCCESS: $@\033[1;00m"
+}
+
+warn() {
+    echo -e "\033[1;33mWARN: $@\033[1;00m"
+}
+
+fail() {
+    echo -e "\033[1;31mFAIL: $@\033[1;00m" >&2
+}
+
+# Detect if something is installed and fail if not found
+check_installed() {
+  if ! command -v $1 &> /dev/null; then
+    fail "${1} is not installed."
+  fi
+}
+
+# Detect if file exists. Warn if it is not found.
+check_file_exists() {
+  if [[ -f $1 ]]; then
+    echo "found"
+  else
+    warn "$1 was not found."
+  fi
+}
+
+# Detect if directory exists. Warn if it is not found.
+check_directory_exists() {
+  if [[ -d $1 ]]; then
+    echo "found"
+  else
+    warn "$1 was not found"
+  fi
+}
+
+# Detect if link exists. Warn if it is not found.
+check_link_exists() {
+  if [[ -L $1 ]]; then
+    echo "found"
+  else
+    warn "$1 was not found."
+  fi
+}
+
+# List hidden files in provided director(y,ies)
+hidden() {
+  ls -a "$@" | grep '^\.';
+}
